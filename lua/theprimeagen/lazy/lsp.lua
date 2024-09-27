@@ -28,6 +28,7 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
+                "pyright",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -64,6 +65,14 @@ return {
                                 }
                             }
                         }
+                    }
+                end,
+
+                -- Add a handler for Pyright
+                ["pyright"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.pyright.setup {
+                        capabilities = capabilities,
                     }
                 end,
             }
