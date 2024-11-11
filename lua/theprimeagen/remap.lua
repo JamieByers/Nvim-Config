@@ -5,6 +5,13 @@ vim.keymap.set("n", "<leader><leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader><leader>q", vim.cmd.wq)
 
 
+
+vim.keymap.set("n", "<leader><leader>t", vim.cmd.terminal)
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<leader><leader>b', '<C-\\><C-n>:b#<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>b', '<C-\\><C-n>:b#<CR>', { noremap = true, silent = true })
+
+
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
