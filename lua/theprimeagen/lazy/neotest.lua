@@ -25,6 +25,12 @@ return {
                 })
             }
         })
+
+
+        vim.api.nvim_set_keymap("n", "<leader>t", "<cmd>lua require('neotest').run.run()<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "<leader>ent", "<cmd>lua require('neotest').run.stop()<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "<leader>tf", "<cmd>lua require('neotestr).run.run(vim.fn.expand('%'))<CR>", { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("n", "<leader>dnt", "<cmd>lua require('neotest').run.run({strategy = 'dap'})<CR>", { noremap = true, silent = true })
     end
 }
 
