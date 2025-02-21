@@ -29,6 +29,8 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "pyright",
+                "gopls",
+                "html"
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -68,6 +70,24 @@ return {
                     }
                 end,
 
+                ["html"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.html.setup {
+                        capabilities = capabilities,
+                        settings = {
+                            html = {
+                                format = {
+                                    indentInnerHtml = true,
+                                },
+                                hover = {
+                                    documentation = true,
+                                    references = true,
+                                },
+                            }
+                        }
+                    }
+                end,
+
                 -- Add a handler for Pyright
                 ["pyright"] = function()
                     local lspconfig = require("lspconfig")
@@ -75,6 +95,30 @@ return {
                         capabilities = capabilities,
                     }
                 end,
+                ["gopls"] = function()
+                local lspconfig = require("lspconfig")
+                lspconfig.gopls.setup {
+                    capabilities = capabilities,
+                    settings = {
+                        gopls = {
+                            -- Optional: Configure Go-specific LSP settings
+                            analyses = {
+                                unusedparams = true,
+                                shadow = true,
+                            },
+                            staticcheck = true,
+                            hints = {
+                                assignVariableTypes = true,
+                                compositeLiteralFields = true,
+                                constantValues = true,
+                                functionTypeParameters = true,
+                                parameterNames = true,
+                                rangeVariableTypes = true,
+                            }
+                        }
+                    }
+                }
+            end,
             }
         })
 

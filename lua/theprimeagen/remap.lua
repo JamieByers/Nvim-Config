@@ -3,8 +3,7 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader><leader>", vim.cmd.w)
 vim.keymap.set("n", "<leader><leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader><leader>q", vim.cmd.wq)
-
-
+vim.api.nvim_set_keymap('n', '<leader>ca', 'ggVG"+y', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader><leader>t", vim.cmd.terminal)
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
@@ -57,6 +56,6 @@ vim.keymap.set(
     "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
 )
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen/packer.lua<CR>");
+vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen<CR>");
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 
