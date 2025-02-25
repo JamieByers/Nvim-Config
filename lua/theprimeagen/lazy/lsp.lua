@@ -1,6 +1,7 @@
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
+        "Saghen/blink.cmp",
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
@@ -14,7 +15,6 @@ return {
     },
 
     config = function()
-        local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
         local capabilities = vim.tbl_deep_extend(
             "force",
@@ -122,26 +122,63 @@ return {
             }
         })
 
-        local cmp_select = { behavior = cmp.SelectBehavior.Select }
+        -- nvim-cmp completion
+        -- local cmp = require('cmp')
+        -- local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
+        -- cmp.setup({
+        --     snippet = {
+        --         expand = function(args)
+        --             require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        --         end,
+        --     },
+        --     mapping = cmp.mapping.preset.insert({
+        --         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+        --         ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+        --         ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+        --         ["<C-Space>"] = cmp.mapping.complete(),
+        --     }),
+        --     sources = cmp.config.sources({
+        --         { name = 'nvim_lsp' },
+        --         { name = 'luasnip' }, -- For luasnip users.
+        --     }, {
+        --         { name = 'buffer' },
+        --     })
+        -- })
+        --
+
+        -- blink.cmp configuration
+        local cmp = require('blink.cmp')
         cmp.setup({
-            snippet = {
-                expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-                end,
+            completion = {
+                keyword = { range = 'full' },
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 500,
+                },
+                ghost_text = {
+                    enabled = true,
+                },
+                list = {
+                    selection = { auto_insert = true },
+                },
             },
-            mapping = cmp.mapping.preset.insert({
-                ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<Tab>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete(),
-            }),
-            sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
-                { name = 'luasnip' }, -- For luasnip users.
-            }, {
-                { name = 'buffer' },
-            })
+
+            signature = { enabled = true },
+
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+            },
+
+            keymap = {
+                preset = "super-tab",
+            },
+
+            cmdline = {
+                enabled = false,
+            },
+
+
         })
 
         vim.diagnostic.config({
@@ -155,5 +192,6 @@ return {
                 prefix = "",
             },
         })
-    end
+    end,
+
 }
