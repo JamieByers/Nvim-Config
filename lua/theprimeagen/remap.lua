@@ -5,10 +5,20 @@ vim.keymap.set("n", "<leader><leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader><leader>q", vim.cmd.wq)
 vim.api.nvim_set_keymap('n', '<leader>ca', 'ggVG"+y', { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader><leader>t", vim.cmd.terminal)
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<leader><leader>b', '<C-\\><C-n>:b#<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader><leader>b', '<C-\\><C-n>:b#<CR>', { noremap = true, silent = true })
+-- vim.keymap.set("n", "<leader><leader>t", vim.cmd.terminal)
+-- vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('t', '<leader><leader>b', '<C-\\><C-n>:b#<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader><leader>b', '<C-\\><C-n>:b#<CR>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader><leader>r', function()
+  package.loaded['semicolonify'] = nil
+  require('semicolonify')
+  print('Plugin reloaded!')
+end)
+
+vim.keymap.set("n", "<leader><leader>;", function()
+    require("semicolonify").semicolonify()
+end)
 
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
