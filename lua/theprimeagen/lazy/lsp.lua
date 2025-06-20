@@ -12,6 +12,7 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "j-hui/fidget.nvim",
+        "supermaven-inc/supermaven-nvim",
     },
 
     config = function()
@@ -30,7 +31,12 @@ return {
                 "rust_analyzer",
                 "pyright",
                 "gopls",
-                "html"
+                "html",
+                "vtsls",
+                "jsonls",
+                "clangd",
+                "omnisharp",
+                "csharp_ls",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -86,6 +92,88 @@ return {
                             }
                         }
                     }
+                end,
+
+                ["clangd"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.clangd.setup({
+                        capabilities = capabilities,
+                        cmd = { "clangd", "--background-index", "--clang-tidy" },
+                        root_dir = lspconfig.util.root_pattern(".git", "compile_commands.json", "compile_flags.txt", "Makefile"),
+                    })
+                end,
+
+                ["csharp_ls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.csharp_ls.setup({
+                        capabilities = capabilities,
+                        cmd = { "csharp-ls" },
+                        filetypes = { "cs" },
+                        root_dir = lspconfig.util.root_pattern("*.sln", "*.csproj", ".git"),
+                    })
+                end,
+
+
+
+                ["vtsls"] = function()
+                    local lspconfig = require("lspconfig")
+
+                    lspconfig.vtsls.setup({
+                        capabilities = capabilities, -- reuse from your config
+                        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git"),
+                        settings = {
+                            typescript = {
+                                inlayHints = {
+                                    parameterNames = { enabled = "all" },
+                                    parameterTypes = { enabled = true },
+                                    variableTypes = { enabled = true },
+                                    propertyDeclarationTypes = { enabled = true },
+                                    functionLikeReturnTypes = { enabled = true },
+                                    enumMemberValues = { enabled = true },
+                                },
+                                suggest = {
+                                    completeFunctionCalls = true
+                                },
+                            },
+                            javascript = {
+                                inlayHints = {
+                                    parameterNames = { enabled = "all" },
+                                    parameterTypes = { enabled = true },
+                                    variableTypes = { enabled = true },
+                                    propertyDeclarationTypes = { enabled = true },
+                                    functionLikeReturnTypes = { enabled = true },
+                                    enumMemberValues = { enabled = true },
+                                },
+                                suggest = {
+                                    completeFunctionCalls = true
+                                },
+                            },
+                        },
+                    })
+                end,
+
+                ["jsonls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.jsonls.setup({
+                        capabilities = capabilities,
+                        settings = {
+                            json = {
+                                validate = { enable = true },
+                            },
+                        },
+                    })
+                end,
+
+
+                ["omnisharp"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.omnisharp.setup({
+                        capabilities = capabilities,
+                        cmd = { "omnisharp" },
+                        enable_roslyn_analyzers = true,
+                        organise_imports_on_format = true,
+                        enable_import_completion = true,
+                    })
                 end,
 
                 -- Add a handler for Pyright
@@ -149,6 +237,7 @@ return {
 
         -- blink.cmp configuration
         local cmp = require('blink.cmp')
+
         cmp.setup({
             completion = {
                 keyword = { range = 'full' },
@@ -167,7 +256,7 @@ return {
             signature = { enabled = true },
 
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' },
+                default = { 'lsp', 'path', 'snippets', 'buffer', },
             },
 
             keymap = {

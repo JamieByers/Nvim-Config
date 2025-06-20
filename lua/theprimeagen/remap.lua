@@ -50,12 +50,22 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
+-- the best go command EVER - Jamie
 vim.keymap.set(
     "n",
     "<leader>ee",
     "oif err != nil {<CR>}<Esc>Oreturn err<Esc>"
 )
+vim.keymap.set(
+    "n",
+    "<leader>ep",
+    "oif err != nil {<CR>}<Esc>Olog.Fatal(err)<Esc>"
+)
+
+vim.keymap.set('n', '<leader>wr', function()
+  vim.wo.wrap = not vim.wo.wrap
+end, { desc = "Toggle Wrap" })
+
 
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/.config/nvim/lua/theprimeagen<CR>");
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
-
