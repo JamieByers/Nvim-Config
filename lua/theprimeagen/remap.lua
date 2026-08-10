@@ -3,7 +3,9 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader><leader>", vim.cmd.w)
 vim.keymap.set("n", "<leader><leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader><leader>q", vim.cmd.wq)
-vim.api.nvim_set_keymap('n', '<leader>ca', 'ggVG"+y', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ca', 'ggVG"+y<C-o>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>gcd', 'f.lgd', { noremap = true, silent = true })
 
 -- vim.keymap.set("n", "<leader><leader>t", vim.cmd.terminal)
 -- vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
@@ -22,6 +24,14 @@ end)
 
 vim.keymap.set("n", "<leader>;", function()
     require("semicolonify").semicolonify()
+end)
+
+vim.keymap.set("v", "<leader><leader>;", function()
+    require("semicolonify").VisualSemicolonify()
+end)
+
+vim.keymap.set("v", "<leader>;", function()
+    require("semicolonify").VisualSemicolonify()
 end)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
