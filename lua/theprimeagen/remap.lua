@@ -4,6 +4,8 @@ vim.keymap.set("n", "<leader><leader>", vim.cmd.w)
 vim.keymap.set("n", "<leader><leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader><leader>q", vim.cmd.wq)
 vim.api.nvim_set_keymap('n', '<leader>ca', 'ggVG"+y<C-o>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader><leader>c', '^ciw', { noremap = true, silent = true })
+
 
 vim.keymap.set('n', '<leader>gcd', 'f.lgd', { noremap = true, silent = true })
 

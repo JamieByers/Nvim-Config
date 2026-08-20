@@ -78,8 +78,11 @@ return {
                     "omnisharp",
                     "gopls",
                     "jdtls",
-                    -- "zls",
-                    -- "sourcekit",
+
+                    "html",
+                    "cssls",
+                    "vtsls",
+                    "jsonls",
                 },
 
                 handlers = {
@@ -275,25 +278,28 @@ return {
                         vim.g.zig_fmt_parse_errors = 0
                         vim.g.zig_fmt_autosave = 0
                     end,
-
-                    ["sourcekit"] = function()
-                        lspconfig.sourcekit.setup({
-                            capabilities = capabilities,
-                            cmd = {
-                                "sourcekit-lsp",
-                            },
-                            filetypes = {
-                                "swift",
-                                "objective-c",
-                                "objective-cpp",
-                            },
-                            root_dir = util.root_pattern(
-                                "Package.swift",
-                                ".git"
-                            ),
-                        })
-                    end,
                 },
+            })
+
+            -- sourcekit-lsp is bundled with Xcode / the Swift toolchain rather
+            -- than being installable through Mason, so it's configured
+            -- directly via lspconfig instead of through mason-lspconfig's
+            -- handlers table above.
+            lspconfig.sourcekit.setup({
+                capabilities = capabilities,
+                cmd = {
+                    "xcrun",
+                    "sourcekit-lsp",
+                },
+                filetypes = {
+                    "swift",
+                    "objective-c",
+                    "objective-cpp",
+                },
+                root_dir = util.root_pattern(
+                    "Package.swift",
+                    ".git"
+                ),
             })
 
             vim.diagnostic.config({
