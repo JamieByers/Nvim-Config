@@ -24,12 +24,15 @@ return {
                 "jsdoc",
                 "bash",
                 "go",
+                "python",
+                "lua",
                 "java",
                 "html",
                 "css",
                 "json",
                 "markdown",
                 "markdown_inline",
+                "latex",
             })
 
             vim.api.nvim_create_autocmd("FileType", {

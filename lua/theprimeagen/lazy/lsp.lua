@@ -78,10 +78,12 @@ return {
                     "omnisharp",
                     "gopls",
                     "jdtls",
+                    "yamlls",
 
                     "html",
                     "cssls",
                     "vtsls",
+                    "astro",
                     "jsonls",
                 },
 
@@ -92,6 +94,7 @@ return {
                         })
                     end,
 
+
                     ["lua_ls"] = function()
                         lspconfig.lua_ls.setup({
                             capabilities = capabilities,
@@ -99,6 +102,9 @@ return {
                                 Lua = {
                                     runtime = {
                                         version = "LuaJIT",
+                                    },
+                                    completion = {
+                                        callSnippet = "Replace",
                                     },
                                     diagnostics = {
                                         globals = {
@@ -112,6 +118,13 @@ return {
                                     },
                                     workspace = {
                                         checkThirdParty = false,
+                                        library = {
+                                            vim.env.VIMRUNTIME,
+                                            vim.api.nvim_get_runtime_file("", true),
+                                        },
+                                    },
+                                    telemetry = {
+                                        enable = false,
                                     },
                                 },
                             },
